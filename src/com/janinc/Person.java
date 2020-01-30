@@ -6,11 +6,8 @@ Programmering i Java EMMJUH19, EC-Utbildning
 CopyLeft 2020 - JanInc
 */
 
-import com.janinc.enums.PetTypes;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -52,14 +49,13 @@ public class Person {
                 return String.format("%s (%d) owns the %s: %s", name, age, pets.get(0).getType(), pets.get(0).getName());
             }
             else {
-                Map<PetTypes, List<Pet>> groupedPets = (Map<PetTypes, List<Pet>>) pets.stream()
-                        .collect(groupingBy(Pet::getType));
                 return String.format("%s (%d) owns the animals: %s", name, age,
-                        groupedPets
-                        .entrySet()
-                        .stream()
-                        .map(o -> o.getKey() + ": " + o.getValue().stream().map(Pet::getName).collect(Collectors.joining(", ")))
-                        .collect(Collectors.joining( "; ")));
+                        pets.stream()
+                            .collect(groupingBy(Pet::getType))
+                            .entrySet()
+                            .stream()
+                            .map(o -> o.getKey() + ": " + o.getValue().stream().map(Pet::getName).collect(Collectors.joining(", ")))
+                            .collect(Collectors.joining( "; ")));
             } // else
         } // else
     } // toString
